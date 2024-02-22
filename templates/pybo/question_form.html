@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+    <form method="post">
+        <!-- form 태그에는 action 속성을 지정하여 submit 실행시 action에 정의된 URL로 폼을 전송해야 하지만-->
+        <!-- "질문수정" 기능에도 이 템플릿을 활용하기 위해 action 속성 비우기 -->
+        <!-- 현재 url이 디폴트 action으로 설정됨 -->
+        {% csrf_token %}
+        <!-- {{ form.as_p }} 삭제 -->
+        <!-- 오류 표시 START -->
+        {% include "form_errors.html" %}
+        <!-- 오류 표시 END -->
+        <div class="mb-3">
+            <label for="subject" class="form-label">제목</label>
+            <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">저장하기</button>
+    </form>
+</div>
+{% endblock %}
